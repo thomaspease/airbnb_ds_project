@@ -56,10 +56,11 @@ class AirbnbDataCleaner(DataCleaner):
     cleaned_df = self.set_default_feature_values(df=cleaned_df, columns=['beds', 'bathrooms', 'bedrooms', 'guests'])
     cleaned_df.to_csv('data/tabular_data/clean_tabular_data.csv', index = False)
 
-def scale(el):
+def scale(df):
   scaler = MinMaxScaler()
-  scaler.fit(el)
-  return scaler.transform(el)
+  # I'm not sure why you need the iloc on the right hand side here, but you do...
+  df.iloc[:,0:-1] = scaler.fit_transform(df.iloc[:,0:-1])
+  return df
 
 class AirbnbLoader():
   def __init__(self):
@@ -78,7 +79,7 @@ class AirbnbLoader():
     return features_df, label_df
 
 if __name__ == "__main__":
-  airbnb_cleaner = AirbnbDataCleaner('data/tabular_data/listing.csv')
-  airbnb_cleaner.clean_tabular_data()
+  # airbnb_cleaner = AirbnbDataCleaner('data/tabular_data/listing.csv')
+  # airbnb_cleaner.clean_tabular_data()
   loader = AirbnbLoader()
   loader.load_airbnb('Price_Night')
