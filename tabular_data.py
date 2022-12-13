@@ -1,5 +1,7 @@
 import pandas as pd
 import ast
+from sklearn.preprocessing import MinMaxScaler
+
 
 class DataCleaner():
   '''
@@ -54,14 +56,29 @@ class AirbnbDataCleaner(DataCleaner):
     cleaned_df = self.set_default_feature_values(df=cleaned_df, columns=['beds', 'bathrooms', 'bedrooms', 'guests'])
     cleaned_df.to_csv('data/tabular_data/clean_tabular_data.csv', index = False)
 
-def load_airbnb(label):
-  complete_df = pd.read_csv('data/tabular_data/clean_tabular_data.csv')
-  numeric_df = complete_df.select_dtypes(['number'])
-  features_df = numeric_df.drop([label], axis=1)
-  label_df = numeric_df.loc[:, label]
-  return features_df, label_df
+def scale(el):
+  scaler = MinMaxScaler()
+  scaler.fit(el)
+  return scaler.transform(el)
+
+class AirbnbLoader():
+  def __init__(self):
+    self.complete_df = pd.read_csv('data/tabular_data/clean_tabular_data.csv')
+    self.numeric_df = self.complete_df.select_dtypes(['number'])
+
+
+  def load_airbnb(self, label, normalized=True):
+    if normalized == True:
+      df = scale(self.numeric_df)
+      df = pd.DataFrame(df)
+    else:
+      df = self.numeric_df
+    features_df = df.drop([label], axis=1)
+    label_df = df.loc[:, label]
+    return features_df, label_df
 
 if __name__ == "__main__":
   airbnb_cleaner = AirbnbDataCleaner('data/tabular_data/listing.csv')
   airbnb_cleaner.clean_tabular_data()
-  load_airbnb('Price_Night')
+  loader = AirbnbLoader()
+  loader.load_airbnb('Price_Night')
