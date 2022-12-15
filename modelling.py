@@ -14,10 +14,9 @@ def split_data(data):
     return X_train, X_test, y_train, y_test
 
 
-
 class Model():
   def __init__(self, Model) -> None:
-    self.pipeline = Pipeline([('scaler',  StandardScaler()), ('model', Model(random_state = 50))])
+    self.pipeline = Pipeline([('scaler',  StandardScaler()), ('model', Model())])
   
   def custom_tune_regression_model_hyperparameters(self, X, y):
     loss=['squared_error', 'huber', 'epsilon_insensitive', 'squared_epsilon_insensitive']
@@ -59,7 +58,7 @@ def evaluate_performance(name, model, X_test, y_test, X_train, y_train):
 if __name__ == "__main__":
   # Load data
   loader = AirbnbLoader()
-  init_data = loader.load_airbnb('Price_Night', normalized=True)
+  init_data = loader.load_airbnb('beds', normalized=True)
   X_train, X_test, y_train, y_test = split_data(init_data)
 
   # Create models
@@ -67,6 +66,9 @@ if __name__ == "__main__":
   tuned_model = model.custom_tune_regression_model_hyperparameters(X=X_train, y=y_train)
   default_model = model.fit_default_model(X=X_train, y=y_train)
 
+  print(tuned_model)
+  print(default_model)
+
   # Evaluate performance
-  evaluate_performance('Tuned model', tuned_model, X_test=X_test, y_test=y_test, X_train=X_train, y_train=y_train)
-  evaluate_performance('Default model', default_model, X_test=X_test, y_test=y_test, X_train=X_train, y_train=y_train)
+  # evaluate_performance('Tuned model', tuned_model, X_test=X_test, y_test=y_test, X_train=X_train, y_train=y_train)
+  # evaluate_performance('Default model', default_model, X_test=X_test, y_test=y_test, X_train=X_train, y_train=y_train)
