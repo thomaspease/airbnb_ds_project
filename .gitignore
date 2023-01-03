@@ -1,2 +1,5 @@
 data/*
 .DS_Store
+catboost_info
+.ipynb_checkpoints
+archive
