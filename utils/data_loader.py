@@ -19,6 +19,12 @@ class AirbnbLoader():
       df = pd.DataFrame(df)
     else:
       df = self.numeric_df
-    features_df = df.drop([label], axis=1)
-    label_df = df.loc[:, label]
+    
+    # This is because at this point df is just numeric so if you have the category as the label then it won't be in df
+    if label in df.columns:
+      features_df = df.drop([label], axis=1)
+    else:
+      features_df = df
+
+    label_df = self.complete_df.loc[:, label]
     return features_df, label_df
