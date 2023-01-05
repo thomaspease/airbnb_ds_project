@@ -10,7 +10,7 @@ def scale(df):
 
 class AirbnbLoader():
   def __init__(self):
-    self.complete_df = pd.read_csv('data/tabular_data/clean_tabular_data.csv')
+    self.complete_df = pd.read_csv('/Users/tompease/Documents/Coding/airbnb/data/tabular_data/clean_tabular_data.csv')
     self.numeric_df = self.complete_df.select_dtypes(['number'])
 
   def load_airbnb(self, label, normalized=True):
