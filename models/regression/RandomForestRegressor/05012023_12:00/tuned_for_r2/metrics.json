@@ -1,0 +1,11 @@
+{
+    "params": {
+        "n_estimators": 1600,
+        "min_samples_split": 5,
+        "min_samples_leaf": 2,
+        "max_depth": 90,
+        "bootstrap": true
+    },
+    "train": 0.7608098294991061,
+    "test": 0.2365142402495501
+}

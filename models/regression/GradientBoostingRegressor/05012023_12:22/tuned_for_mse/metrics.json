@@ -1,0 +1,10 @@
+{
+    "params": {
+        "loss": "huber",
+        "max_depth": 3,
+        "min_samples_leaf": 17,
+        "min_samples_split": 4
+    },
+    "train": -0.0065876161846090174,
+    "test": -0.008928774979482444
+}
