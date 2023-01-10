@@ -1,5 +1,8 @@
-data/*
+data
+__pycache__
 .DS_Store
 catboost_info
 .ipynb_checkpoints
-archive
+-archive
+models
+runs
