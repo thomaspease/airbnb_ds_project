@@ -1,14 +1,10 @@
+import sys
+sys.path.append('/Users/tompease/Documents/Coding/airbnb')
 from torch.utils.data import Dataset, DataLoader, random_split
 import torch
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
-from data_loader import AirbnbLoader
-
-def scale(df):
-  scaler = MinMaxScaler()
-  # I'm not sure why you need the iloc on the right hand side here, but you do...
-  df.iloc[:,0:-1] = scaler.fit_transform(df.iloc[:,0:-1])
-  return df
+from utils.data_loader import AirbnbLoader
 
 class AirbnbPytorchDataset(Dataset):
   def __init__(self, label, normalize=True):
@@ -17,8 +13,8 @@ class AirbnbPytorchDataset(Dataset):
 
   def __getitem__(self, index):
     # These have to be cast as 32 bit tensors as the default is 64, but the default weights for pytorch linear layers are float32s, and they have to match...
-    features = torch.tensor(self.X[index], dtype=torch.float32)
-    label = torch.tensor(self.y[index], dtype=torch.float32)
+    features = torch.tensor(self.X.iloc[index], dtype=torch.float32)
+    label = torch.tensor(self.y.iloc[index], dtype=torch.float32)
 
     return (features, label)
 

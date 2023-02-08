@@ -14,7 +14,7 @@ from torch.utils.tensorboard import SummaryWriter
 # N_TRAIN_EXAMPLES = BATCHSIZE * 30
 # N_VALID_EXAMPLES = BATCHSIZE * 10
 IN_FEATURES = 9
-EPOCHS = 20
+EPOCHS = 10
 
 def define_model(trial):
   n_layers = trial.suggest_int("n_layers", 1, 3)
@@ -44,7 +44,7 @@ class Objective():
     model = define_model(trial)
 
     optimizer_name = trial.suggest_categorical("optimizer", ['Adam', 'RMSprop', 'SGD'])
-    lr = trial.suggest_float('lr', 1e-5, 1e-1, log=True)
+    lr = trial.suggest_float('lr', 1e-5, 1e-2)
     # The first half finds the relevant class of optimizer by using the names as passed in above, and then you pass in the parameters and the learning rate into that model
     optimizer = getattr(torch.optim, optimizer_name)(model.parameters(), lr=lr)
 

@@ -78,6 +78,7 @@ class ClassificationTuneModel(TuneModel):
     with open(f'{path}/metrics.json', "w") as outfile:
       json.dump(self.tuned_performance_, outfile, indent=4)
     
+    print('Model saved :)')
     
 
 class RegressionTuneModel(TuneModel):
@@ -111,6 +112,8 @@ class RegressionTuneModel(TuneModel):
     
     with open(f'{r2_path}/metrics.json', "w") as outfile:
       json.dump(self.tuned_for_r2_performance_, outfile, indent=4)
+
+    print('Model saved :)')
     
 
   def __tune_and_return_model(self, scoring, n_iter):    

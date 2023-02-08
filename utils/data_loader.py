@@ -37,5 +37,6 @@ class AirbnbLoader():
     
     return X_train, y_train
 
-  def load_test_sets(self):
+  def load_test_sets(self, label):
+    self.load_airbnb(label)
     return self.X_test, self.y_test
